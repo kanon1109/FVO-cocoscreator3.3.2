@@ -113,21 +113,21 @@ export class FVOTest extends Component {
 
     private initObstacles(): void {
         this.obstacleArray = this.gff.getObstacleMapArr();
-        for (let i: number = 0; i < this.obstacleArray.length; i++) {
-            resources.load("prefab/ob", Prefab, (err, prefab) => {
+        resources.load("prefab/ob", Prefab, (err, prefab) => {
+            for (let i: number = 0; i < this.obstacleArray.length; i++) {
                 let data: { col: number, row: number } = this.obstacleArray[i];
                 let pos: { x: number, y: number } = this.gff.getPosByGrid(data.col, data.row);
                 let ob: Node = instantiate(prefab);
                 ob.setPosition(new Vec3(pos.x, 0, pos.y))
                 this.node.addChild(ob);
-            });
-        }
+            }
+        });
         this.am.update();
     }
 
     private initAgentVos(): void {
-        for (let i: number = 0; i < this.enemyDataList.length; i++) {
-            resources.load("prefab/role", Prefab, (err, prefab) => {
+        resources.load("prefab/role", Prefab, (err, prefab) => {
+            for (let i: number = 0; i < this.enemyDataList.length; i++) {
                 let data: { x: number, y: number, rotation?: number } = this.enemyDataList[i];
                 let role: Node = instantiate(prefab);
                 role.setScale(.5, .5, .5);
@@ -136,14 +136,15 @@ export class FVOTest extends Component {
                 let aVo: AgentVo = this.am.addAgentVo(data.x, data.y, r);
                 this.node.addChild(role);
                 aVo.userData = role;
-            });
-        }
+            }
+        });
+
         this.am.update();
     }
 
     private addAgentVos(count: number): void {
-        for (let i: number = 0; i < count; i++) {
-            resources.load("prefab/role", Prefab, (err, prefab) => {
+        resources.load("prefab/role", Prefab, (err, prefab) => {
+            for (let i: number = 0; i < count; i++) {
                 let role: Node = instantiate(prefab);
                 role.setScale(.5, .5, .5);
                 role.setPosition(new Vec3(this.stageWidth / 2, 0, this.stageHeight / 2))
@@ -151,8 +152,8 @@ export class FVOTest extends Component {
                 let aVo: AgentVo = this.am.addAgentVo(this.stageWidth / 2, this.stageHeight / 2, r);
                 this.node.addChild(role);
                 aVo.userData = role;
-            });
-        }
+            }
+        });
         this.am.update();
     }
 
@@ -213,7 +214,7 @@ export class FVOTest extends Component {
     update() {
         this.am.update();
         this.updateViews();
-        if(this.am.agents.length < 500)
+        if (this.am.agents.length < 500)
             this.addAgentVos(1);
     }
 }
